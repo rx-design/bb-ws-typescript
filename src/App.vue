@@ -5,11 +5,12 @@
 <script lang="ts">
 import axios from 'axios';
 import { defineComponent } from 'vue';
+import User from '../types/user';
 
 export default defineComponent({
   data() {
     return {
-      users: [] as any[],
+      users: [] as User[],
     };
   },
   mounted() {
