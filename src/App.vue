@@ -2,13 +2,14 @@
   <div>{{ users }}</div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios';
+import { defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
   data() {
     return {
-      users: [],
+      users: [] as any[],
     };
   },
   mounted() {
@@ -16,5 +17,5 @@ export default {
       .get('http://localhost:3000')
       .then(response => (this.users = response.data));
   },
-};
+});
 </script>
