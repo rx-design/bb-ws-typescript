@@ -1,4 +1,11 @@
 import * as Hapi from '@hapi/hapi';
+import axios from 'axios';
+
+async function getUsers() {
+  return axios
+    .get('https://jsonplaceholder.typicode.com/users')
+    .then(response => response.data);
+}
 
 const server = Hapi.server({
   port: 3000,
@@ -11,7 +18,7 @@ const server = Hapi.server({
 server.route({
   method: 'GET',
   path: '/',
-  handler: () => ('Hello, Bigbank!'),
+  handler: getUsers,
 });
 
 server.start().then(() => {
