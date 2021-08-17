@@ -8,6 +8,16 @@ async function getUsers(): Promise<User[]> {
     .then(response => response.data);
 }
 
+async function getFilteredUsers(name?: string) {
+  const users = await getUsers();
+
+  if (!name) {
+    return users;
+  }
+
+  return users.filter(u => u.name.startsWith(name));
+}
+
 const server = Hapi.server({
   port: 3000,
   host: 'localhost',
@@ -18,8 +28,8 @@ const server = Hapi.server({
 
 server.route({
   method: 'GET',
-  path: '/',
-  handler: getUsers,
+  path: '/{name?}',
+  handler: (request) => getFilteredUsers(request.params.name),
 });
 
 server.start().then(() => {
