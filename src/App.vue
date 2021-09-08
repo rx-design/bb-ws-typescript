@@ -11,30 +11,28 @@
 
 <script lang="ts">
 import axios from 'axios';
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted, ref, watch } from 'vue';
 import User from '../types/user';
 
 export default defineComponent({
-  data() {
-    return {
-      name: '',
-      users: [] as User[],
-    };
-  },
-  watch: {
-    name() {
-      this.getUsers();
-    },
-  },
-  mounted() {
-    this.getUsers();
-  },
-  methods: {
-    getUsers() {
+  setup() {
+    const name = ref('');
+    const users = ref<User[]>([]);
+
+    const getUsers = () => {
       axios
-        .get<User[]>('http://localhost:3000/' + this.name)
-        .then(response => (this.users = response.data));
-    },
+        .get<User[]>('http://localhost:3000/' + name.value)
+        .then(response => (users.value = response.data));
+    };
+
+    watch(name, getUsers);
+
+    onMounted(getUsers);
+
+    return {
+      name,
+      users,
+    };
   },
 });
 </script>
