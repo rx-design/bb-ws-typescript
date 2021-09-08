@@ -2,9 +2,9 @@ import * as Hapi from '@hapi/hapi';
 import axios from 'axios';
 import User from '../types/user';
 
-async function getUsers(): Promise<User[]> {
+async function getUsers() {
   return axios
-    .get('https://jsonplaceholder.typicode.com/users')
+    .get<User[]>('https://jsonplaceholder.typicode.com/users')
     .then(response => response.data);
 }
 
